@@ -6,7 +6,7 @@ from streamlit_folium import folium_static
 import pydeck as pdk
 from streamlit.components.v1 import html
 # Constants
-API_BASE_URL = 'https://volund-backend.onrender.com/'
+API_BASE_URL = 'https://volund-backend.onrender.com'
 SESSION_HISTORY_ENDPOINT = '/session-history/'
 SESSION_BY_ID_ENDPOINT = '/session-history/{session_id}'
 QUERY_LOCATION_ENDPOINT = '/query_location'
@@ -31,6 +31,7 @@ def get_jwt_token(username, password):
         'username': username,
         'password': password
     })
+    print(response.json())
     if response.status_code == 200:
         return response.json()['access_token']
     else:
@@ -129,7 +130,7 @@ def query_ai(query, token, session_id=None):
     }
     print("Request data:", data)
     try:
-        response = requests.post(f"{API_BASE_URL}query_ai", json=data)
+        response = requests.post(f"{API_BASE_URL}/query_ai", json=data)
         response.raise_for_status()  # Raise an exception for HTTP errors
         return response.json()
     except requests.exceptions.RequestException as e:
@@ -158,64 +159,67 @@ def authentication_page():
         """
         <style>
         .stApp {
-            background-color: #e3f2fd;  /* Light blue background for a fresh look */
-            font-family: 'Verdana', sans-serif;  /* Clean and modern font */
+            background-color: #121212;  /* Dark background for dark mode */
+            color: #e0e0e0;  /* Light text color for readability in dark mode */
+            font-family: 'Arial', sans-serif;  /* Clean and modern font */
         }
         .header {
-            color: #0288d1;  /* Bright blue color for the header */
-            font-size: 2.2em;
+            color: #bb86fc;  /* Light purple color for the header */
+            font-size: 2.4em;
             text-align: center;
-            margin-top: 20px;
+            margin-top: 30px;
             padding: 10px;
+            font-weight: bold;
         }
         .subheader {
-            color: #01579b;  /* Darker blue color for the subheader */
-            font-size: 1.4em;
+            color: #03dac6;  /* Light teal color for the subheader */
+            font-size: 1.6em;
             margin-bottom: 20px;
+            text-align: center;
         }
         .form-container {
-            background-color: #ffffff;  /* White background for forms */
+            background-color: #1f1f1f;  /* Darker background for forms */
             border-radius: 8px;  /* Rounded corners */
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);  /* Subtle shadow */
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);  /* Subtle shadow for depth */
             margin: auto;
             max-width: 400px;  /* Fixed width for the form */
         }
         .form-button {
-            background-color: #039be5;  /* Bright blue for buttons */
-            color: #ffffff;  /* White text color */
+            background-color: #bb86fc;  /* Light purple for buttons */
+            color: #121212;  /* Dark text color */
             border-radius: 4px;  /* Rounded corners */
-            padding: 10px;
-            font-size: 1em;
+            padding: 12px;
+            font-size: 1.1em;
             width: 100%;
             text-align: center;
             cursor: pointer;
             border: none;
-            transition: background-color 0.3s;  /* Smooth color transition */
+            transition: background-color 0.3s, color 0.3s;  /* Smooth color transition */
         }
         .form-button:hover {
-            background-color: #0288d1;  /* Darker blue on hover */
+            background-color: #9f6fdf;  /* Darker purple on hover */
         }
         input[type="text"], input[type="password"] {
             width: 100%;
-            padding: 10px;
-            margin: 8px 0;
+            padding: 12px;
+            margin: 10px 0;
             border-radius: 4px;  /* Rounded corners */
-            border: 1px solid #b0bec5;  /* Light grey border */
-            background-color: #fafafa;  /* Light grey background for inputs */
+            border: 1px solid #333333;  /* Dark border */
+            background-color: #292929;  /* Dark grey background for inputs */
+            color: #e0e0e0;  /* Light text color */
             box-sizing: border-box;
             transition: border-color 0.3s;  /* Smooth border color transition */
         }
         input[type="text"]:focus, input[type="password"]:focus {
-            border-color: #039be5;  /* Highlight border color matching button */
+            border-color: #bb86fc;  /* Highlight border color matching button */
             outline: none;
-            background-color: #ffffff;  /* White background on focus */
+            background-color: #1f1f1f;  /* Slightly darker background on focus */
         }
         </style>
         """,
         unsafe_allow_html=True
     )
-
 
     st.markdown('<div class="header">Authentication</div>', unsafe_allow_html=True)
 
@@ -253,10 +257,10 @@ def authentication_page():
                         st.session_state['signup_success'] = False
                         st.rerun()
             st.markdown('</div>', unsafe_allow_html=True)
-
+            
 
 def chat_page():
-    st.title('Chat Application')
+    st.title('Tourism Assistant')
 
     if 'token' in st.session_state:
         token = st.session_state['token']
@@ -283,21 +287,6 @@ def chat_page():
             margin-bottom: 10px; /* Reduced margin to fit logout button */
             box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow */
         }
-        .sidebar-logout {
-            background-color: #ff5722; /* Vibrant orange for logout button */
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 10px;
-            margin-bottom: 20px;
-            cursor: pointer;
-            font-size: 16px;
-            text-align: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow */
-        }
-        .sidebar-logout:hover {
-            background-color: #e64a19; /* Darker orange on hover */
-        }
         .sidebar-button {
             background-color: #ffffff; /* White background for session buttons */
             border: 1px solid #b0bec5; /* Light grey border */
@@ -319,13 +308,59 @@ def chat_page():
             color: white;
             border-color: #388e3c;
         }
+        .logout-button {
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            border: 2px solid #ffffff;
+            border-radius: 10px;
+            color: #ffffff;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px; /* Margin to separate from other content */
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .logout-button:hover {
+            background-color: #feb47b; /* Lighter gradient color on hover */
+            color: #333;
+        }
         </style>
         """, unsafe_allow_html=True)
 
 
         with st.sidebar:
             # Display username and logout button
-            st.markdown(f'<div class="sidebar-username">{username}</div>', unsafe_allow_html=True)
+            st.markdown("""
+            <style>
+                .welcome-container {
+                    text-align: center;
+                    background: linear-gradient(to right, #ff7e5f, #feb47b);
+                    padding: 20px;
+                    border-radius: 15px;
+                    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+                    color: #fff;
+                }
+                .username {
+                    font-size: 2em;
+                    font-weight: bold;
+                    color: #ffffff;
+                    margin-top: 10px;
+                    border: 2px solid #ffffff;
+                    padding: 10px;
+                    border-radius: 10px;
+                    display: inline-block;
+                    background: rgba(0, 0, 0, 0.3);
+                }
+            </style>
+            """, unsafe_allow_html=True)
+
+            # Displaying the styled content
+            st.markdown("""
+            <div class="welcome-container">
+                <h1>Welcome to Your Dashboard!</h1>
+                <div class="username">{username}</div>
+            </div>
+            """.format(username=username), unsafe_allow_html=True)
             
             if st.button('Logout', key='logout', help='Log out of the application'):
                 st.session_state.clear()  # Clears all session state variables
@@ -527,7 +562,7 @@ def chat_page():
 
 # Main function
 def main():
-    st.set_page_config(page_title='AI Chat Application', layout='wide')
+    st.set_page_config(page_title='Tourism Application', layout='wide')
     
     if 'token' not in st.session_state:
         authentication_page()
