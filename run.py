@@ -159,38 +159,37 @@ def authentication_page():
         """
         <style>
         .stApp {
-            background-color: #121212;  /* Dark background for dark mode */
-            color: #e0e0e0;  /* Light text color for readability in dark mode */
-            font-family: 'Arial', sans-serif;  /* Clean and modern font */
+            background-color: #f5f5f5;  /* Light grey background for a clean look */
+            font-family: 'Arial', sans-serif;  /* Modern and legible font */
         }
         .header {
-            color: #bb86fc;  /* Light purple color for the header */
+            color: #333333;  /* Dark grey color for the header */
             font-size: 2.4em;
             text-align: center;
             margin-top: 30px;
             padding: 10px;
-            font-weight: bold;
+            font-weight: 600;  /* Semi-bold text */
         }
         .subheader {
-            color: #03dac6;  /* Light teal color for the subheader */
+            color: #666666;  /* Medium grey color for the subheader */
             font-size: 1.6em;
             margin-bottom: 20px;
             text-align: center;
         }
         .form-container {
-            background-color: #1f1f1f;  /* Darker background for forms */
+            background-color: #ffffff;  /* White background for forms */
             border-radius: 8px;  /* Rounded corners */
             padding: 30px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);  /* Subtle shadow for depth */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);  /* Soft shadow for depth */
             margin: auto;
             max-width: 400px;  /* Fixed width for the form */
         }
         .form-button {
-            background-color: #bb86fc;  /* Light purple for buttons */
-            color: #121212;  /* Dark text color */
+            background-color: #e0e0e0;  /* Light grey for buttons */
+            color: #333333;  /* Dark text color */
             border-radius: 4px;  /* Rounded corners */
             padding: 12px;
-            font-size: 1.1em;
+            font-size: 1em;
             width: 100%;
             text-align: center;
             cursor: pointer;
@@ -198,23 +197,23 @@ def authentication_page():
             transition: background-color 0.3s, color 0.3s;  /* Smooth color transition */
         }
         .form-button:hover {
-            background-color: #9f6fdf;  /* Darker purple on hover */
+            background-color: #d0d0d0;  /* Slightly darker grey on hover */
         }
         input[type="text"], input[type="password"] {
             width: 100%;
             padding: 12px;
             margin: 10px 0;
             border-radius: 4px;  /* Rounded corners */
-            border: 1px solid #333333;  /* Dark border */
-            background-color: #292929;  /* Dark grey background for inputs */
-            color: #e0e0e0;  /* Light text color */
+            border: 1px solid #cccccc;  /* Light grey border */
+            background-color: #ffffff;  /* White background for inputs */
+            color: #333333;  /* Dark text color */
             box-sizing: border-box;
-            transition: border-color 0.3s;  /* Smooth border color transition */
+            transition: border-color 0.3s, background-color 0.3s;  /* Smooth transitions */
         }
         input[type="text"]:focus, input[type="password"]:focus {
-            border-color: #bb86fc;  /* Highlight border color matching button */
+            border-color: #999999;  /* Slightly darker grey border on focus */
             outline: none;
-            background-color: #1f1f1f;  /* Slightly darker background on focus */
+            background-color: #f9f9f9;  /* Very light grey background on focus */
         }
         </style>
         """,
@@ -241,7 +240,6 @@ def authentication_page():
                         st.session_state['selected_session_id'] = None
                         st.session_state['username'] = username
                         st.rerun()
-            st.markdown('</div>', unsafe_allow_html=True)
     
     # Sign Up Tab
     with tab2:
@@ -256,8 +254,6 @@ def authentication_page():
                     if 'signup_success' in st.session_state and st.session_state['signup_success']:
                         st.session_state['signup_success'] = False
                         st.rerun()
-            st.markdown('</div>', unsafe_allow_html=True)
-            
 
 def chat_page():
     st.title('Tourism Assistant')
