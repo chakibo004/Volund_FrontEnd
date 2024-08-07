@@ -45,7 +45,7 @@ def sign_up(username, password):
         'password': password
     })
     if response.status_code == 200:
-        st.success("Sign up successful! Please log in.")
+        st.write("Sign up successful! Please log in.")
         st.session_state['signup_success'] = True
     else:
         st.error("Sign up failed!")
@@ -220,7 +220,7 @@ def authentication_page():
         unsafe_allow_html=True
     )
 
-    st.markdown('<div class="header">Authentication</div>', unsafe_allow_html=True)
+    st.markdown('<div class="header">Konnect app - Safe Hiking and Tourism </div>', unsafe_allow_html=True)
 
     # Tabs for signup and login
     tab1, tab2 = st.tabs(["Login", "Sign Up"])
@@ -239,6 +239,7 @@ def authentication_page():
                         st.session_state['token'] = token
                         st.session_state['selected_session_id'] = None
                         st.session_state['username'] = username
+                        st.success("Login successful!")
                         st.rerun()
     
     # Sign Up Tab
@@ -252,6 +253,7 @@ def authentication_page():
                 if signup_button:
                     sign_up(username, password)
                     if 'signup_success' in st.session_state and st.session_state['signup_success']:
+                        st.write("Signed up!")  # Displaying the additional message
                         st.session_state['signup_success'] = False
                         st.rerun()
 
@@ -528,7 +530,7 @@ def chat_page():
 
                     elif submit_button and not user_input:
                         st.warning("Please enter a message to start the conversation.")
-                        
+
         else:
             st.info("Start a new chat by entering a message below:")
             st.session_state['longitude']=None
