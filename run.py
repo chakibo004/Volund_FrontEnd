@@ -257,34 +257,35 @@ def authentication_page():
 
 def chat_page():
     st.title('Tourism Assistant')
-
     if 'token' in st.session_state:
         token = st.session_state['token']
         selected_session_id = st.session_state.get('selected_session_id', None)
-        username = st.session_state['username'] # Ensure you have the username in session state
+        username = st.session_state['username']  # Ensure you have the username in session state
 
         st.markdown("""
         <style>
         .sidebar {
             padding: 20px;
-            background-color: #4caf50; /* Fresh green background for the sidebar */
+            background: #4caf50; /* Solid green background */
             border-right: 1px solid #388e3c; /* Darker green border */
             height: 100vh;
             overflow-y: auto;
+            font-family: Arial, sans-serif; /* Modern font */
         }
         .sidebar-username {
-            padding: 10px;
-            border-radius: 8px;
-            background-color: #ffffff; /* White background for username */
+            padding: 15px;
+            border-radius: 12px;
+            background: #ffffff; /* White background for username */
             color: #4caf50; /* Fresh green color for text */
-            font-size: 18px;
+            font-size: 20px;
             font-weight: bold;
             text-align: center;
-            margin-bottom: 10px; /* Reduced margin to fit logout button */
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow */
+            margin-bottom: 20px; /* Space for logout button */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow */
+            border: 1px solid #4caf50; /* Matching border */
         }
         .sidebar-button {
-            background-color: #ffffff; /* White background for session buttons */
+            background-color: #ffffff; /* White background for buttons */
             border: 1px solid #b0bec5; /* Light grey border */
             border-radius: 8px;
             padding: 10px;
@@ -293,7 +294,7 @@ def chat_page():
             text-align: center;
             color: #333;
             font-weight: bold;
-            transition: background-color 0.3s, border-color 0.3s;
+            transition: all 0.3s;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow */
         }
         .sidebar-button:hover {
@@ -301,64 +302,60 @@ def chat_page():
         }
         .sidebar-button.selected {
             background-color: #388e3c; /* Dark green for selected session */
-            color: white;
+            color: #ffffff;
             border-color: #388e3c;
         }
         .logout-button {
-            background: linear-gradient(to right, #ff7e5f, #feb47b);
-            border: 2px solid #ffffff;
+            background-color: #ff7e5f; /* Solid orange background */
+            border: 1px solid #ffffff;
             border-radius: 10px;
             color: #ffffff;
-            padding: 10px 20px;
+            padding: 12px;
             cursor: pointer;
             font-size: 16px;
-            margin-top: 20px; /* Margin to separate from other content */
+            margin-top: 20px; /* Space above logout button */
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-            transition: background-color 0.3s, color 0.3s;
+            transition: background-color 0.3s;
+            width: calc(100% - 20px); /* Full width minus padding */
+            text-align: center;
         }
         .logout-button:hover {
-            background-color: #feb47b; /* Lighter gradient color on hover */
-            color: #333;
+            background-color: #feb47b; /* Lighter orange on hover */
+        }
+        .welcome-container {
+            text-align: center;
+            background: #ffffff; /* White background */
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            color: #4caf50;
+            margin-bottom: 20px; /* Space below the container */
+        }
+        .username {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #4caf50;
+            margin-top: 10px;
+            border: 2px solid #4caf50;
+            padding: 10px;
+            border-radius: 8px;
+            display: inline-block;
+            background: rgba(0, 0, 0, 0.05); /* Light background */
         }
         </style>
         """, unsafe_allow_html=True)
 
-
         with st.sidebar:
             # Display username and logout button
             st.markdown("""
-            <style>
-                .welcome-container {
-                    text-align: center;
-                    background: linear-gradient(to right, #ff7e5f, #feb47b);
-                    padding: 20px;
-                    border-radius: 15px;
-                    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-                    color: #fff;
-                }
-                .username {
-                    font-size: 2em;
-                    font-weight: bold;
-                    color: #ffffff;
-                    margin-top: 10px;
-                    border: 2px solid #ffffff;
-                    padding: 10px;
-                    border-radius: 10px;
-                    display: inline-block;
-                    background: rgba(0, 0, 0, 0.3);
-                }
-            </style>
-            """, unsafe_allow_html=True)
-
-            # Displaying the styled content
-            st.markdown("""
             <div class="welcome-container">
-                <h1>Welcome to Your Dashboard!</h1>
+                <h1>Welcome!</h1>
                 <div class="username">{username}</div>
             </div>
             """.format(username=username), unsafe_allow_html=True)
-            
-            if st.button('Logout', key='logout', help='Log out of the application'):
+
+            # JavaScript to handle logout
+            if st.button('Logout', key='logout', help='Log out of the application', use_container_width=True):
                 st.session_state.clear()  # Clears all session state variables
                 st.rerun()  # Refresh the page
 
@@ -383,8 +380,8 @@ def chat_page():
                     selected_session_id = session_id
                     st.session_state['location_query_done'] = False  # Reset location query status
                     st.session_state['all_places_data'] = None  # Clear stored place data
-                    st.session_state['longitude']=None
-                    st.session_state['latitude']=None
+                    st.session_state['longitude'] = None
+                    st.session_state['latitude'] = None
                     st.rerun()
 
         if selected_session_id:
@@ -531,8 +528,8 @@ def chat_page():
 
                     elif submit_button and not user_input:
                         st.warning("Please enter a message to start the conversation.")
+                        
         else:
-            # No selected session ID: Show empty input and handle new session creation
             st.info("Start a new chat by entering a message below:")
             st.session_state['longitude']=None
             st.session_state['latitude']=None
