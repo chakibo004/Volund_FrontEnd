@@ -1,13 +1,13 @@
 Streamlit Chat and Location Query Application
 
-This application is a Streamlit-based web app that allows users to authenticate, manage chat sessions, and query location data. It leverages various APIs for authentication, session management, and location querying, and integrates with Folium and Pydeck for mapping and visualization.
+This application is a Streamlit-based web app that enables users to authenticate, manage chat sessions, and query location data. It leverages various APIs for authentication, session management, and location querying, and integrates with Folium and Pydeck for mapping and visualization.
 Features
 
-    User Authentication: Users can sign up, log in, and manage their sessions.
-    Session Management: Users can view their chat history and start new chats.
-    Location Query: Users can query location data based on longitude and latitude.
-    Place Visualization: Displays queried locations on an interactive map using Folium.
-    AI Interaction: Communicates with an AI backend to process and respond to queries.
+    User Authentication: Sign up, log in, and manage user sessions.
+    Session Management: View chat history and start new chats.
+    Location Query: Query location data based on longitude and latitude.
+    Place Visualization: Display queried locations on an interactive map using Folium.
+    AI Interaction: Communicate with an AI backend to process and respond to queries.
 
 Requirements
 
@@ -20,20 +20,22 @@ Requirements
 
 Installation
 
-    Clone the repository:
+    Clone the Repository:
 
     bash
 
 git clone https://github.com/chakibo004/Volund_FrontEnd
-cd your-repo
+cd Volund_FrontEnd
 
-Install the required packages:
+Install the Required Packages:
 
 bash
 
 pip install -r requirements.txt
 
-Create a .env file in the root directory of the project to store your environment variables. Add the following lines, replacing the placeholders with your actual values:
+Set Up Environment Variables:
+
+Create a .env file in the root directory of the project and add the following lines, replacing the placeholders with your actual values:
 
 plaintext
 
@@ -41,13 +43,15 @@ plaintext
 
 Usage
 
-    Run the Streamlit app:
+    Run the Streamlit App:
 
     bash
 
     streamlit run app.py
 
-    Navigate to the app in your browser (typically http://localhost:8501).
+    Navigate to the App:
+
+    Open your browser and go to http://localhost:8501.
 
 App Features
 Authentication Page
@@ -64,7 +68,8 @@ Chat Page
 
 Error Handling
 
-    The app provides feedback on invalid input (e.g., incorrect latitude or longitude) and API call failures.
+    Invalid Input: The app provides feedback on incorrect latitude or longitude values.
+    API Call Failures: Errors in API calls are handled with appropriate messages.
 
 API Endpoints
 
@@ -80,3 +85,4 @@ Troubleshooting
 
     Login Issues: Ensure your username and password are correct. Check the server status.
     Map Display Problems: Verify the validity of longitude and latitude values. Ensure your API endpoint is correctly configured.
+
